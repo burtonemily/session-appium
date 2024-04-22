@@ -29,6 +29,6 @@ to do
 *.mjs
 
 config/local*
-
+**/*.js
 
 .eslintcache
