@@ -1,22 +1,23 @@
 import {
+  AppiumAndroidCapabilities,
   AppiumCapabilities,
   W3CCapabilities,
-} from "@wdio/types/build/Capabilities";
+} from '@wdio/types/build/Capabilities';
 // import { W3CCapabilities } from "appium/build/lib/appium";
-import { isNil, isString } from "lodash";
-import { CapabilitiesIndexType } from "./capabilities_ios";
+import { isNil, isString } from 'lodash';
+import { CapabilitiesIndexType } from './capabilities_ios';
 
 const androidAppFullPath = `/Users/emilyburton/Desktop/android-to-be-tested/session-1.18.4-universal.apk`;
 
-const sharedCapabilities: AppiumCapabilities = {
-  "appium:app": androidAppFullPath,
-  "appium:platformName": "Android",
-  "appium:platformVersion": "14",
-  "appium:appPackage": "network.loki.messenger",
-  "appium:appActivity": "network.loki.messenger.RoutingActivity",
-  "appium:automationName": "UiAutomator2",
-  "appium:newCommandTimeout": 300000,
-  "appium:eventTimings": false,
+const sharedCapabilities: AppiumAndroidCapabilities & AppiumCapabilities = {
+  'appium:app': androidAppFullPath,
+  'appium:platformName': 'Android',
+  'appium:platformVersion': '14',
+  'appium:appPackage': 'network.loki.messenger',
+  'appium:appActivity': 'network.loki.messenger.RoutingActivity',
+  'appium:automationName': 'UiAutomator2',
+  'appium:newCommandTimeout': 300000,
+  'appium:eventTimings': false,
 };
 // const sharedCapabilities: AppiumCapabilities = {
 //   "appium:app": androidAppFullPath,
@@ -30,40 +31,40 @@ const sharedCapabilities: AppiumCapabilities = {
 //   "appium:eventTimings": false,
 // };
 
-const emulator1Udid = "emulator-5554";
-const emulator2Udid = "emulator-5556";
-const emulator3Udid = "emulator-5558";
-const emulator4Udid = "emulator-5560";
-const physicalDevice1Udid = "99251FFAZ000TP";
-const physicalDevice2Udid = "SDEDU20311000793";
+const emulator1Udid = 'emulator-5554';
+const emulator2Udid = 'emulator-5556';
+const emulator3Udid = 'emulator-5558';
+const emulator4Udid = 'emulator-5560';
+const physicalDevice1Udid = '99251FFAZ000TP';
+const physicalDevice2Udid = 'SDEDU20311000793';
 
 export const physicalDeviceCapabilities1: AppiumCapabilities = {
   ...sharedCapabilities,
-  "appium:udid": physicalDevice1Udid,
+  'appium:udid': physicalDevice1Udid,
 };
 
 export const physicalDeviceCapabilities2: AppiumCapabilities = {
   ...sharedCapabilities,
-  "appium:udid": physicalDevice2Udid,
+  'appium:udid': physicalDevice2Udid,
 };
 
 const emulatorCapabilities1: AppiumCapabilities = {
   ...sharedCapabilities,
-  "appium:udid": emulator1Udid,
+  'appium:udid': emulator1Udid,
 };
 const emulatorCapabilities2: AppiumCapabilities = {
   ...sharedCapabilities,
-  "appium:udid": emulator2Udid,
+  'appium:udid': emulator2Udid,
 };
 
 const emulatorCapabilities3: AppiumCapabilities = {
   ...sharedCapabilities,
-  "appium:udid": emulator3Udid,
+  'appium:udid': emulator3Udid,
 };
 
 const emulatorCapabilities4: AppiumCapabilities = {
   ...sharedCapabilities,
-  "appium:udid": emulator4Udid,
+  'appium:udid': emulator4Udid,
 };
 // const countOfAndroidCapabilities = 4;
 
@@ -119,9 +120,9 @@ export function getAndroidUdid(udidIndex: CapabilitiesIndexType): string {
   }
   const cap = allCaps[udidIndex];
 
-  const udid = cap["appium:udid"];
+  const udid = cap['appium:udid'];
   if (isString(udid)) {
     return udid;
   }
-  throw new Error("Udid isnt set");
+  throw new Error('Udid isnt set');
 }
