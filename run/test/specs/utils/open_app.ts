@@ -246,13 +246,13 @@ const openAndroidApp = async (
   console.log(`udid: ${udid}`);
   const wrappedDevice = new DeviceWrapper(device, udid);
 
-  await runScriptAndLog(`adb -s ${targetName} shell settings put global heads_up_notifications_enabled 0
+  await runScriptAndLog(`${getAdbFullPath()} -s ${targetName} shell settings put global heads_up_notifications_enabled 0
     `);
-  await runScriptAndLog(`adb -s ${targetName} shell settings put global window_animation_scale 0
+  await runScriptAndLog(`${getAdbFullPath()} -s ${targetName} shell settings put global window_animation_scale 0
     `);
-  await runScriptAndLog(`adb -s ${targetName} shell settings put global transition_animation_scale 0
+  await runScriptAndLog(`${getAdbFullPath()} -s ${targetName} shell settings put global transition_animation_scale 0
     `);
-  await runScriptAndLog(`adb -s ${targetName} shell settings put global animator_duration_scale 0
+  await runScriptAndLog(`${getAdbFullPath()} -s ${targetName} shell settings put global animator_duration_scale 0
     `);
 
   console.info('1');

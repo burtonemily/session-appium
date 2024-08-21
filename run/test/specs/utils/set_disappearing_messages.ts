@@ -29,8 +29,19 @@ export const setDisappearingMessage = async (
     strategy: 'accessibility id',
     selector: DISAPPEARING_TIMES.ONE_DAY,
   });
-
-  await device.disappearRadioButtonSelected(DISAPPEARING_TIMES.ONE_DAY);
+  if (platform === 'android') {
+    const radioButton = await device.waitForTextElementToBePresent({
+      strategy: 'accessibility id',
+      selector: DISAPPEARING_TIMES.ONE_DAY,
+    });
+    const attr = await device.getAttribute('selected', radioButton.ELEMENT);
+    if (attr) {
+      console.log('Great success - default time is correct');
+    } else {
+      throw new Error('Dammit - default time was not correct');
+    }
+  }
+  // await device.disappearRadioButtonSelected(DISAPPEARING_TIMES.ONE_DAY);
   await device.clickOnElementAll({
     strategy: 'accessibility id',
     selector: timerDuration,

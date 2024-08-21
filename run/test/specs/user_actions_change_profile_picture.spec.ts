@@ -1,5 +1,6 @@
 import { androidIt, iosIt } from '../../types/sessionIt';
 import { sleepFor } from './utils';
+import { getAdbFullPath } from './utils/binaries';
 import { parseDataImage } from './utils/check_colour';
 import { newUser } from './utils/create_account';
 import { SupportedPlatformsType, closeApp, openAppOnPlatformSingleDevice } from './utils/open_app';
@@ -104,16 +105,15 @@ async function changeProfilePictureAndroid(platform: SupportedPlatformsType) {
     );
 
     await runScriptAndLog(
-      `adb -s emulator-5554 push 'run/test/specs/media/profile_picture.jpg' /sdcard/Download/`,
+      `${getAdbFullPath()} -s emulator-5554 push 'run/test/specs/media/profile_picture.jpg' /storage/emulated/0/Download`,
       true
     );
     // Verifies that the file was successful downloaded to device
-    await runScriptAndLog(`adb -s emulator-5554 shell ls /sdcard/Download/`, true);
+    await runScriptAndLog(
+      `${getAdbFullPath()} -s emulator-5554 shell ls /storage/emulated/0/Download`,
+      true
+    );
   }
-  // await device.clickOnElementAll({
-  //   strategy: 'accessibility id',
-  //   selector: 'Photo taken on May 2, 1999 7:00:00 AM',
-  // });
   await device.clickOnElementById('network.loki.messenger:id/crop_image_menu_crop');
   const el = await device.waitForTextElementToBePresent({
     strategy: 'accessibility id',
