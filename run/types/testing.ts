@@ -49,7 +49,12 @@ export const InteractionPoints: Record<string, Coordinates> = {
   DocumentKeyboardOpen: { x: 34, y: 445 },
 };
 
-export type Strategy = 'accessibility id' | 'xpath' | 'id' | 'class name';
+export type Strategy =
+  | 'accessibility id'
+  | 'xpath'
+  | 'id'
+  | 'class name'
+  | 'network.loki.messenger:id/';
 
 export type ConversationType = '1:1' | 'Group' | 'Community' | 'Note to Self';
 

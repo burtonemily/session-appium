@@ -109,11 +109,15 @@ class SessionReporter implements Reporter {
 
       console.info('stderr:');
       result.stderr.map(t => process.stderr.write(t.toString()));
-
-      const lastError = result.errors[result.errors.length - 1];
-      console.info(
-        `test failed with "${lastError.message}" \n\tvalue:${lastError?.value} \n\tsnippet:${lastError.snippet} \n\tstack:${lastError?.stack}`
-      );
+      // This is to ensure that if the errors array is empty, we don't print
+      if (result.errors && result.errors.length > 0) {
+        const lastError = result.errors[result.errors.length - 1];
+        console.info(
+          `test failed with "${lastError.message}" \n\tvalue:${lastError?.value} \n\tsnippet:${lastError.snippet} \n\tstack:${lastError?.stack}`
+        );
+      } else {
+        console.info('No errors were reported for this test.');
+      }
     } else {
       console.log(
         `${getChalkColorForStatus(result)(`\t\tFinished test "${test.title}": ${result.status}`)}`

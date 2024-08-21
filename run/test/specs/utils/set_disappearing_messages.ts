@@ -22,16 +22,22 @@ export const setDisappearingMessage = async (
       text: 'Disappearing messages',
     })
   );
-  if (enforcedType === '1:1') {
-    await device.clickOnByAccessibilityID(timerType);
+  if (enforcedType === '1:1' && platform === 'ios') {
+    await device.clickOnElementAll({ strategy: 'accessibility id', selector: timerType });
+  }
+  if (enforcedType === '1:1' && platform === 'android') {
+    await device.clickOnElementAll({
+      strategy: 'id',
+      selector: timerType,
+    });
   }
   await device.waitForTextElementToBePresent({
-    strategy: 'accessibility id',
+    strategy: 'id',
     selector: DISAPPEARING_TIMES.ONE_DAY,
   });
   if (platform === 'android') {
     const radioButton = await device.waitForTextElementToBePresent({
-      strategy: 'accessibility id',
+      strategy: 'id',
       selector: DISAPPEARING_TIMES.ONE_DAY,
     });
     const attr = await device.getAttribute('selected', radioButton.ELEMENT);
@@ -42,10 +48,17 @@ export const setDisappearingMessage = async (
     }
   }
   // await device.disappearRadioButtonSelected(DISAPPEARING_TIMES.ONE_DAY);
-  await device.clickOnElementAll({
-    strategy: 'accessibility id',
-    selector: timerDuration,
-  });
+  if (platform === 'android') {
+    await device.clickOnElementAll({
+      strategy: 'id',
+      selector: timerDuration,
+    });
+  } else {
+    await device.clickOnElementAll({
+      strategy: 'accessibility id',
+      selector: timerDuration,
+    });
+  }
   await device.clickOnElementAll({ strategy: 'accessibility id', selector: 'Set button' });
   await runOnlyOnIOS(platform, () => device.navigateBack(platform));
   await sleepFor(1000);

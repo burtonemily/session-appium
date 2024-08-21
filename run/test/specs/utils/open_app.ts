@@ -262,6 +262,7 @@ const openAndroidApp = async (
     ignoreUnimportantViews: false,
     allowInvisibleElements: true,
     enableMultiWindows: true,
+    disableIdLocatorAutocompletion: true,
   });
   console.info('3');
   return { device: wrappedDevice };
