@@ -1,4 +1,6 @@
-import { DeviceWrapper } from './DeviceWrapper';
+import { DeviceWrapper } from '././types/DeviceWrapper';
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- Used in docstring
 
 export type User = {
   userName: USERNAME;
@@ -302,7 +304,6 @@ export type AccessibilityId =
   | 'space'
   | 'Recovery password input'
   | 'Read Receipts - Switch'
-  | 'Voice and Video Calls - Switch'
   | 'Recovery password menu item'
   | 'Hide recovery password button'
   | 'Hide Recovery Password Permanently'
@@ -320,14 +321,7 @@ export type AccessibilityId =
   | 'X'
   | 'Close'
   | 'Continue button'
-  | 'Error message'
-  | 'Open URL'
-  | 'Terms of Service'
-  | 'Terms of service button'
-  | 'Privacy Policy'
-  | 'Privacy policy button'
-  | 'TabBarItemTitle'
-  | 'URL';
+  | 'Error message';
 
 export type Id =
   | 'Modal heading'
@@ -363,10 +357,10 @@ export type Id =
   | 'Delete'
   | 'android:id/content_preview_text'
   | 'network.loki.messenger:id/search_result_title'
-  | 'com.android.chrome:id/url_bar'
-  | 'Terms of Service'
-  | 'Privacy Policy'
-  | 'com.android.chrome:id/signin_fre_dismiss_button'
-  | 'com.android.chrome:id/negative_button';
+  | 'Error message'
+  | 'Enter display name'
+  | 'Session id input box'
+  | 'android:id/switch_widget'
+  | 'com.android.settings:id/switch_text';
 
-export type TestRisk = 'high' | 'medium' | 'low' | undefined;
+export type testRisk = 'high' | 'medium' | 'low' | undefined;

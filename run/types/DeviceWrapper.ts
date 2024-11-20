@@ -13,8 +13,16 @@ import {
   ReadReceiptsButton,
 } from '../../run/test/specs/locators';
 import { IOS_XPATHS } from '../constants';
-import { ModalDescription, ModalHeading } from '../test/specs/locators/global';
-import { SaveProfilePictureButton, UserSettings } from '../test/specs/locators/settings';
+import {
+  EnableLinkPreviewsModalButton,
+  ModalDescription,
+  ModalHeading,
+} from '../test/specs/locators/global';
+import {
+  EnableVoiceCallsButton,
+  SaveProfilePictureButton,
+  UserSettings,
+} from '../test/specs/locators/settings';
 import { clickOnCoordinates, sleepFor } from '../test/specs/utils';
 import { getAdbFullPath } from '../test/specs/utils/binaries';
 import { SupportedPlatformsType } from '../test/specs/utils/open_app';
@@ -30,6 +38,7 @@ import {
   User,
   XPath,
 } from './testing';
+import { englishStripped } from '../localizer/i18n/localizedString';
 
 export type Coordinates = {
   x: number;
@@ -1784,6 +1793,52 @@ export class DeviceWrapper {
         `Modal description is incorrect. Expected description: ${expectedDescription}, Actual description: ${formattedDescription}`
       );
     }
+  }
+
+  public async enableVoiceCalls() {
+    await this.clickOnByAccessibilityID('Call');
+    // Enabled voice calls in privacy settings
+    await this.checkModalStrings(
+      englishStripped(`callsPermissionsRequired`).toString(),
+      englishStripped(`callsPermissionsRequiredDescription`).toString(),
+      true
+    );
+    await this.clickOnByAccessibilityID('Settings');
+    // Scroll to bottom of page to voice and video calls
+    await this.scrollDown();
+    // Toggle voice settings on
+    await this.clickOnElementAll(new EnableVoiceCallsButton(this));
+
+    // Click enable on exposure IP address warning
+    await this.checkModalStrings(
+      englishStripped(`callsVoiceAndVideoBeta`).toString(),
+      englishStripped(`callsVoiceAndVideoModalDescription`).toString(),
+      true
+    );
+    await this.onIOS().clickOnByAccessibilityID('Continue');
+    await this.onAndroid().clickOnElementAll(new EnableLinkPreviewsModalButton(this));
+    await this.onIOS().modalPopup({
+      strategy: 'accessibility id',
+      selector: 'Allow voice and video calls',
+    });
+    await this.onAndroid().clickOnElementAll(new ImagePermissionsModalAllow(this));
+    const notificationsModal = await this.onAndroid().doesElementExist({
+      strategy: 'accessibility id',
+      selector: 'Modal heading',
+      text: 'Notifications',
+    });
+    if (notificationsModal) {
+      await this.clickOnElementAll({ strategy: 'accessibility id', selector: 'Notifications' });
+      // For some reason typescript doesn't like this Id, so i had to directly cast it as id to fix
+      await this.clickOnElementAll({
+        strategy: 'id',
+        selector: 'com.android.settings:id/switch_text' as Id,
+        text: 'All Session notifications',
+      });
+      await this.navigateBack();
+    }
+    // Navigate back to conversation
+    await this.onAndroid().navigateBack();
   }
 
   /* === all the utilities function ===  */

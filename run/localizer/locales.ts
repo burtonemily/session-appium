@@ -168,7 +168,7 @@ export const en = {
     'Voice and Video Calls require notifications to be enabled in your device system settings.',
   callsPermissionsRequired: 'Call Permissions Required',
   callsPermissionsRequiredDescription:
-    'You can enable the "Voice and Video Calls" permission in Privacy Settings. Mobile only.',
+    'You can enable the "Voice and Video Calls" permission in Privacy Settings.',
   callsPermissionsRequiredDescription1:
     'You can enable the "Voice and Video Calls" permission in Permissions Settings.',
   callsReconnecting: 'Reconnecting…',
@@ -451,6 +451,8 @@ export const en = {
   groupDelete: 'Delete Group',
   groupDeleteDescription:
     'Are you sure you want to delete <b>{group_name}</b>? This will remove all members and delete all group content.',
+  groupDeletedMemberDescription:
+    '{group_name} has been deleted by a group admin. You will not be able to send any more messages.',
   groupDescriptionEnter: 'Enter a group description',
   groupDisplayPictureUpdated: 'Group display picture updated.',
   groupEdit: 'Edit Group',

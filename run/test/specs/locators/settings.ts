@@ -69,3 +69,21 @@ export class SaveProfilePictureButton extends LocatorsInterface {
     }
   }
 }
+
+export class EnableVoiceCallsButton extends LocatorsInterface {
+  public build() {
+    switch (this.platform) {
+      case 'android':
+        return {
+          strategy: 'id',
+          selector: 'android:id/summary',
+          text: 'Enables voice and video calls to and from other users.',
+        } as const;
+      case 'ios':
+        return {
+          strategy: 'accessibility id',
+          selector: 'Voice and Video Calls - Switch',
+        } as const;
+    }
+  }
+}

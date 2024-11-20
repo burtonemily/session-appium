@@ -124,6 +124,8 @@ export class ReadReceiptsButton extends LocatorsInterface {
   }
 }
 
+
+
 export class ExitUserProfile extends LocatorsInterface {
   public build() {
     switch (this.platform) {
