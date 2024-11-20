@@ -1326,7 +1326,7 @@ export class DeviceWrapper {
     }
     if (this.isIOS()) {
       const testMessage = 'Testing-document-1';
-      const spongebobsBirthday = '199905010700.00';
+      const spongeBobsBirthday = '199905010700.00';
       await this.clickOnByAccessibilityID('Attachments button');
       await sleepFor(100);
       await clickOnCoordinates(this, InteractionPoints.DocumentKeyboardOpen);
@@ -1340,7 +1340,7 @@ export class DeviceWrapper {
 
       if (!testDocument) {
         await runScriptAndLog(
-          `touch -a -m -t ${spongebobsBirthday} 'run/test/specs/media/test_file.pdf'`
+          `touch -a -m -t ${spongeBobsBirthday} 'run/test/specs/media/test_file.pdf'`
         );
 
         await runScriptAndLog(
@@ -1435,7 +1435,7 @@ export class DeviceWrapper {
   }
 
   public async uploadProfilePicture() {
-    const spongebobsBirthday = '199805010700.00';
+    const spongeBobsBirthday = '199805010700.00';
     await this.clickOnElementAll(new UserSettings(this));
     // Click on Profile picture
     await this.clickOnElementAll(new UserSettings(this));
@@ -1450,7 +1450,7 @@ export class DeviceWrapper {
       });
       if (!profilePicture) {
         await runScriptAndLog(
-          `touch -a -m -t ${spongebobsBirthday} 'run/test/specs/media/profile_picture.jpg'`
+          `touch -a -m -t ${spongeBobsBirthday} 'run/test/specs/media/profile_picture.jpg'`
         );
 
         await runScriptAndLog(
@@ -1484,7 +1484,7 @@ export class DeviceWrapper {
       // If no image, push file to this
       if (!profilePicture) {
         await runScriptAndLog(
-          `touch -a -m -t ${spongebobsBirthday} 'run/test/specs/media/profile_picture.jpg'`
+          `touch -a -m -t ${spongeBobsBirthday} 'run/test/specs/media/profile_picture.jpg'`
         );
 
         await runScriptAndLog(
@@ -1527,9 +1527,8 @@ export class DeviceWrapper {
         maxWait: 500,
       });
       return Boolean(spaceBar);
-    } else {
-      console.log(`Not an iOS device: shouldn't use this function`);
     }
+    console.log(`Not an iOS device: shouldn't use this function`);
   }
 
   public async mentionContact(platform: SupportedPlatformsType, contact: User) {
@@ -1792,6 +1791,8 @@ export class DeviceWrapper {
       throw new Error(
         `Modal description is incorrect. Expected description: ${expectedDescription}, Actual description: ${formattedDescription}`
       );
+    } else {
+      console.log('Modal description is correct');
     }
   }
 
