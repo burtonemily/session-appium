@@ -52,6 +52,7 @@ export const InteractionPoints: Record<string, Coordinates> = {
   GifButtonKeyboardOpen: { x: 34, y: 394 },
   GifButtonKeyboardClosed: { x: 34, y: 663 },
   DocumentKeyboardOpen: { x: 34, y: 445 },
+  ExitNativatePermissions: { x: 45, y: 40 },
 };
 
 export type Strategy = 'accessibility id' | 'xpath' | 'id' | 'class name';
@@ -132,7 +133,8 @@ export type XPath =
   | `//XCUIElementTypeCell[@name="${string}"]`
   | `/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.TextView[2]`
   | `//XCUIElementTypeStaticText[@name="Paste"]`
-  | `//XCUIElementTypeOther[contains(@name, "Hey,")][1]`;
+  | `//XCUIElementTypeOther[contains(@name, "Hey,")][1]`
+  | `//XCUIElementTypeSwitch[@name="Microphone"]/XCUIElementTypeSwitch`;
 
 export type AccessibilityId =
   | 'Create account button'
@@ -325,7 +327,8 @@ export type AccessibilityId =
   | 'Terms of Service'
   | 'Privacy Policy'
   | 'TabBarItemTitle'
-  | 'URL';
+  | 'URL'
+  | 'Missed call';
 
 export type Id =
   | 'Modal heading'
@@ -367,6 +370,8 @@ export type Id =
   | 'com.android.chrome:id/signin_fre_dismiss_button'
   | 'com.android.chrome:id/negative_button'
   | 'network.loki.messenger:id/back_button'
-  | 'Quit';
+  | 'Quit'
+  | 'network.loki.messenger:id/call_text_view'
+  | 'Okay';
 
 export type TestRisk = 'high' | 'medium' | 'low' | undefined;

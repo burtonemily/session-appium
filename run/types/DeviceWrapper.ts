@@ -13,6 +13,8 @@ import {
   ReadReceiptsButton,
 } from '../../run/test/specs/locators';
 import { IOS_XPATHS } from '../constants';
+import { englishStripped } from '../localizer/i18n/localizedString';
+import { CallButton } from '../test/specs/locators/calls';
 import {
   EnableLinkPreviewsModalButton,
   ModalDescription,
@@ -38,7 +40,6 @@ import {
   User,
   XPath,
 } from './testing';
-import { englishStripped } from '../localizer/i18n/localizedString';
 
 export type Coordinates = {
   x: number;
@@ -1806,22 +1807,17 @@ export class DeviceWrapper {
     );
     await this.clickOnByAccessibilityID('Settings');
     // Scroll to bottom of page to voice and video calls
-    await this.scrollDown();
+    await this.onAndroid().scrollDown();
     // Toggle voice settings on
     await this.clickOnElementAll(new EnableVoiceCallsButton(this));
-
     // Click enable on exposure IP address warning
     await this.checkModalStrings(
       englishStripped(`callsVoiceAndVideoBeta`).toString(),
       englishStripped(`callsVoiceAndVideoModalDescription`).toString(),
       true
     );
-    await this.onIOS().clickOnByAccessibilityID('Continue');
+    await this.onIOS().clickOnElementAll({ strategy: 'id', selector: 'Continue' });
     await this.onAndroid().clickOnElementAll(new EnableLinkPreviewsModalButton(this));
-    await this.onIOS().modalPopup({
-      strategy: 'accessibility id',
-      selector: 'Allow voice and video calls',
-    });
     await this.onAndroid().clickOnElementAll(new ImagePermissionsModalAllow(this));
     const notificationsModal = await this.onAndroid().doesElementExist({
       strategy: 'accessibility id',
@@ -1840,6 +1836,33 @@ export class DeviceWrapper {
     }
     // Navigate back to conversation
     await this.onAndroid().navigateBack();
+    await this.onIOS().clickOnElementAll({
+      strategy: 'accessibility id',
+      selector: 'Close button',
+    });
+    // ios needs microphone permissions
+    await this.onIOS().clickOnElementAll(new CallButton(this));
+    await this.onIOS().modalPopup({
+      strategy: 'accessibility id',
+      selector: 'Allow',
+    });
+    await this.onIOS().clickOnElementAll(new CallButton(this));
+    const settings = await this.onIOS().doesElementExist({
+      strategy: 'accessibility id',
+      selector: 'Settings',
+      maxWait: 1000,
+    });
+    if (settings) {
+      await this.onIOS().clickOnElementAll({ strategy: 'accessibility id', selector: 'Settings' });
+      await this.onIOS().clickOnElementAll({
+        strategy: 'xpath',
+        selector: IOS_XPATHS.MICROPHONE_PERMISSIONS_SWITCH,
+      });
+      if (this.isIOS()) {
+        // This is the only way to have iOS only for this function
+        await clickOnCoordinates(this, InteractionPoints.ExitNativatePermissions);
+      }
+    }
   }
 
   /* === all the utilities function ===  */
